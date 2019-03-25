@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Dto\" />
   </ItemGroup>
 
   <ItemGroup>
