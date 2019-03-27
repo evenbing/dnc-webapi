@@ -12,7 +12,7 @@ namespace MyRestfulAPI.Core.DomainModels
         public int PageSize
         {
             get => _pagesize;
-            set => _pagesize = value > MaxPageSzie ? MaxPageSzie :value
+            set => _pagesize = value > MaxPageSzie ? MaxPageSzie : value;
         }
         public string OrderBy { get; set; } = nameof(IEntity.Id);
         public string Fields { get; set; }

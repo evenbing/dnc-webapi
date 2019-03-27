@@ -1,10 +1,20 @@
-﻿using System;
+﻿using MyRestfulAPI.Infrastucture.Services;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MyRestfulAPI.Infrastucture.Extensions
 {
-    class PropertyMappingExtensions
+    /// <summary>
+    /// 注册排序容器
+    /// </summary>
+    public static class PropertyMappingExtensions
     {
+        public static void AddPropertyMappings()
+        {
+            var propertyMappingContainer = new PropertyMappingContainer();
+            propertyMappingContainer.Register<CountryPropertyMapping>();
+
+        }
     }
 }
