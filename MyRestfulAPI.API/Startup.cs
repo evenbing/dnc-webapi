@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MyRestfulAPI.API.Validators;
 using MyRestfulAPI.Infrastucture.Dto.Country;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace MyRestfulAPI.API
 {
@@ -30,12 +31,19 @@ namespace MyRestfulAPI.API
         {
 
             services.AddTransient<IValidator<CountryAddDto>, CountryAddDtoValidator>();
-
+            
             services.AddMvc()
                     .AddJsonOptions(options=> {
                         //options.SerializerSettin 
                     })
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //swagger ui
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "MyRestAPI", Version = "v1" });
+                
+                //c.IncludeXmlComments
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
