@@ -43,10 +43,13 @@ namespace MyRestfulAPI.API
                         //options.SerializerSettin 
                     })
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //swagger ui
+            // swagger ui
+            // other configs;
+            // c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "MyRestAPI", Version = "v1" });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, "MyRestfulAPI.API.XML");
                 c.IncludeXmlComments(xmlPath);

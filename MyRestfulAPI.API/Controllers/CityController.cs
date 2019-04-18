@@ -103,14 +103,6 @@ namespace MyRestfulAPI.API.Controllers
             return Ok(cityDto);
         }
 
-        //public async Task<ActionResult> CreateCity(int countryId, [FromBody] CityAddDto city)
-        //{
-        //    if (city==null)
-        //    {
-        //        return BadRequest();
-        //    }
 
-
-        //}
     }
 }
