@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -46,17 +47,19 @@ namespace MyRestfulAPI.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "MyRestAPI", Version = "v1" });
-                
-                //c.IncludeXmlComments
+
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, "MyRestfulAPI.API.XML");
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper();
+
             services.AddDbContext<DbContext>(options =>
             {
-
+                
             });
 
             services.AddCors();
@@ -75,6 +78,16 @@ namespace MyRestfulAPI.API
             {
                 app.UseHsts();
             }
+
+            app.UseStaticFiles();
+
+            app.UseSwagger(c => { c.RouteTemplate = "swagger/{documentName}/swagger.json"; });
+
+            app.UseSwaggerUI(c =>
+            {
+                //c.RoutePrefix = "swagger/ui";
+                c.SwaggerEndpoint("v1/swagger.json", "ChatBotApi");
+            });
 
             //app.UseCors(builder => builder.WithOrigins(""));
 

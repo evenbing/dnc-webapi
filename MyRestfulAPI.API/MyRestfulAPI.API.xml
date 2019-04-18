@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyRestfulAPI.API</name>
+    </assembly>
+    <members>
+        <member name="T:MyRestfulAPI.API.Controllers.CityController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.CityController.#ctor(MyRestfulAPI.Core.Interfaces.IUnitOfWork,MyRestfulAPI.Core.Interfaces.ICountryRepository,MyRestfulAPI.Core.Interfaces.ICityRepository,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{MyRestfulAPI.API.Controllers.CityController})">
+            <summary>
+            
+            </summary>
+            <param name="unitOfWork"></param>
+            <param name="countryRepository"></param>
+            <param name="cityRepository"></param>
+            <param name="mapper"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.CityController.GetCities(System.Int32)">
+            <summary>
+            获取指定省份下面城市信息
+            </summary>
+            <param name="countryId">省份ID</param>
+            <returns>城市信息</returns>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.CityController.GetCityForCountry(System.Int32,System.Int32)">
+            <summary>
+            获取城市信息
+            </summary>
+            <param name="countryId"></param>
+            <param name="cityId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MyRestfulAPI.API.Controllers.ValuesController">
+            <summary>
+            测试控制器
+            </summary>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.ValuesController.Get">
+            <summary>
+             测试数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.ValuesController.Get(System.Int32)">
+            <summary>
+             测试指定数据
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.ValuesController.Post(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.ValuesController.Put(System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.ValuesController.Delete(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="T:MyRestfulAPI.API.Validators.CountryAddDtoValidator">
+            <summary>
+            fluent-validator
+            </summary>
+        </member>
+    </members>
+</doc>

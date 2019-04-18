@@ -11,7 +11,11 @@ using System.Threading.Tasks;
 
 namespace MyRestfulAPI.API.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/[controller]")]
+    [ApiController]
     public class CityController: ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -20,6 +24,14 @@ namespace MyRestfulAPI.API.Controllers
         private readonly ILogger<CityController> _logger;
         private readonly ICountryRepository _countryRepository;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        /// <param name="countryRepository"></param>
+        /// <param name="cityRepository"></param>
+        /// <param name="mapper"></param>
+        /// <param name="logger"></param>
         public CityController(IUnitOfWork unitOfWork,
             ICountryRepository countryRepository,
             ICityRepository cityRepository,IMapper mapper,
@@ -32,16 +44,29 @@ namespace MyRestfulAPI.API.Controllers
             _logger = logger;
         }
 
+        #region private methods
         private LinkCollectionResourceWrapper<CityDto> CreateLinksForCities(LinkCollectionResourceWrapper<CityDto> citieswrapper)
         {
             citieswrapper.Links.Add(new LinkResource(
-                  href:"",
-                  rel:"self",
-                  method:"GET"
+                  href: "",
+                  rel: "self",
+                  method: "GET"
                 ));
             return citieswrapper;
         }
 
+        #endregion
+
+
+
+        /// <summary>
+        /// 获取指定省份下面城市信息
+        /// </summary>
+        /// <param name="countryId">省份ID</param>
+        /// <returns>城市信息</returns>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [HttpGet]
         public async Task<ActionResult> GetCities(int countryId)
         {
             if (!await _countryRepository.CountriesExistAsync(countryId))
@@ -58,6 +83,13 @@ namespace MyRestfulAPI.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// 获取城市信息
+        /// </summary>
+        /// <param name="countryId"></param>
+        /// <param name="cityId"></param>
+        /// <returns></returns>
+        [HttpGet]
         public async Task<ActionResult> GetCityForCountry(int countryId, int cityId)
         {
             if (!await _countryRepository.CountriesExistAsync(countryId))
