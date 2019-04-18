@@ -6,6 +6,9 @@ using System.Text;
 
 namespace MyRestfulAPI.Infrastucture.Services
 {
+    /// <summary>
+    /// 映射
+    /// </summary>
     public class CountryPropertyMapping : PropertyMapping<CountryDto, Country>
     {
         public CountryPropertyMapping() : base(new Dictionary<string, List<MappedProperty>>(StringComparer.OrdinalIgnoreCase)

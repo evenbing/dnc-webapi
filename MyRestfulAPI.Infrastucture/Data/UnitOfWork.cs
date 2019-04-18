@@ -15,9 +15,9 @@ namespace MyRestfulAPI.Infrastucture.Data
             _myContext = myContext;
         }
 
-        public Task<bool> SaveAsync()
+        public async Task<bool> SaveAsync()
         {
-            throw new NotImplementedException();
+            return await _myContext.SaveChangesAsync() > 0;
         }
     }
 }

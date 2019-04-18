@@ -10,7 +10,7 @@ namespace MyRestfulAPI.API.Validators
     /// <summary>
     /// fluent-validator
     /// </summary>
-    public class CountryAddDtoValidator:AbstractValidator<CountryAddDto>
+    public class CountryAddDtoValidator : AbstractValidator<CountryAddDto>
     {
         public CountryAddDtoValidator()
         {
@@ -26,11 +26,11 @@ namespace MyRestfulAPI.API.Validators
                   .WithMessage("{PropertyName}是必填项")
                   .MaximumLength(100).WithMessage("{PropertyName}的长度不可能超过{MaxLength}");
 
-            RuleFor(c=>c.Abbreviation)
+            RuleFor(c => c.Abbreviation)
                   .NotEmpty()
                   .WithName("缩写")
                   .WithMessage("{PropertyNam}是必填项")
-                  .MaximumLength(5).WithMessage("{PropertyName}的长度不可能超过{MaxLength}")
+                  .MaximumLength(5).WithMessage("{PropertyName}的长度不可能超过{MaxLength}");
         }
     }
 }
