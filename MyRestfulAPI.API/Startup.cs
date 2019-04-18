@@ -62,7 +62,8 @@ namespace MyRestfulAPI.API
 
             services.AddDbContext<DbContext>(options =>
             {
-                
+                options.UseInMemoryDatabase("MyDb");
+                //options.UseLoggerFactory();
             });
 
             services.AddCors();

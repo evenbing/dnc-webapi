@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyRestfulAPI.Core.Interfaces;
@@ -16,6 +17,7 @@ namespace MyRestfulAPI.API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CityController: ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

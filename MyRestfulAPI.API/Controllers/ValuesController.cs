@@ -36,7 +36,7 @@ namespace MyRestfulAPI.API.Controllers
 
 
         /// <summary>
-        /// 
+        /// 测试post
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
@@ -45,10 +45,10 @@ namespace MyRestfulAPI.API.Controllers
         }
 
         /// <summary>
-        /// 
+        ///  测试put
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
+        /// <param name="id">指定ID</param>
+        /// <param name="value">值</param>
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
