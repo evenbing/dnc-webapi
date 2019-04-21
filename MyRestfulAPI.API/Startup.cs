@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 using MyRestfulAPI.API.Validators;
 using MyRestfulAPI.Core.Interfaces;
 using MyRestfulAPI.Infrastucture.Data;
+using MyRestfulAPI.Infrastucture.Dto.City;
 using MyRestfulAPI.Infrastucture.Dto.Country;
 using MyRestfulAPI.Infrastucture.Repositories;
 using Swashbuckle.AspNetCore.Swagger;
@@ -37,6 +38,8 @@ namespace MyRestfulAPI.API
         {
 
             services.AddTransient<IValidator<CountryAddDto>, CountryAddDtoValidator>();
+            services.AddTransient<IValidator<CityUpdateDto>, CityUpdateDtoValidator>();
+
             
             services.AddMvc()
                     .AddJsonOptions(options=> {

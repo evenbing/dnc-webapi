@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MyRestfulAPI.Core.DomainModels;
 using MyRestfulAPI.Core.Interfaces;
 using MyRestfulAPI.Infrastucture.Dto.City;
 using MyRestfulAPI.Infrastucture.Dto.Hateoas;
@@ -47,24 +48,18 @@ namespace MyRestfulAPI.API.Controllers
         }
 
         #region private methods
-        private LinkCollectionResourceWrapper<CityDto> CreateLinksForCities(LinkCollectionResourceWrapper<CityDto> citieswrapper)
-        {
-            citieswrapper.Links.Add(new LinkResource(
-                  href: "",
-                  rel: "self",
-                  method: "GET"
-                ));
-            return citieswrapper;
-        }
-
+        //private LinkCollectionResourceWrapper<CityDto> createLinksForCities()
+        //{
+        //    LinkCollectionResourceWrapper<CityDto>
+        //}
         #endregion
 
 
 
         /// <summary>
-        /// 获取指定省份下面城市信息
+        /// 获取指定国家下面城市信息
         /// </summary>
-        /// <param name="countryId">省份ID</param>
+        /// <param name="countryId">国家Id</param>
         /// <returns>城市信息</returns>
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -88,8 +83,8 @@ namespace MyRestfulAPI.API.Controllers
         /// <summary>
         /// 获取城市信息
         /// </summary>
-        /// <param name="countryId"></param>
-        /// <param name="cityId"></param>
+        /// <param name="countryId">国家Id</param>
+        /// <param name="cityId">城市id</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult> GetCityForCountry(int countryId, int cityId)
@@ -103,6 +98,70 @@ namespace MyRestfulAPI.API.Controllers
             var cityForCountry = await _cityRepository.GetCityCountryAsync(countryId, cityId);
             var cityDto = _mapper.Map<CityDto>(cityForCountry);
             return Ok(cityDto);
+        }
+
+        /// <summary>
+        /// 创建城市
+        /// </summary>
+        /// <param name="countryId">国家Id</param>
+        /// <param name="city">城市信息</param>
+        /// <returns>状态码201</returns>
+        [HttpPost(Name = "createCityForCountry")]
+        public async Task<IActionResult> CreateCityForCountry(int countryId, [FromBody] CityDto city)
+        {
+            if (city ==null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return new UnprocessableEntityObjectResult(ModelState);
+            }
+
+            if (!await _countryRepository.CountriesExistAsync(countryId))
+            {
+                return NotFound();
+            }
+
+            var cityModel = _mapper.Map<City>(city);
+            _cityRepository.AddCityForCountry(countryId, cityModel);
+            if (!await _unitOfWork.SaveAsync())
+            {
+                throw new Exception("Error occurred");
+            }
+            var cityDto = _mapper.Map<CityDto>(cityModel);
+            return CreatedAtRoute("GetCityForCountry", new { countryId, cityId = cityModel.Id });
+        }
+
+        /// <summary>
+        /// 删除指定id城市数据
+        /// </summary>
+        /// <param name="countryId">国家Id</param>
+        /// <param name="cityId">城市Id</param>
+        /// <returns>状态码204</returns>
+        [HttpDelete(Name ="DeleteCityForCountry")]
+        public async Task<IActionResult> DeleteCityForCountry(int countryId, int cityId)
+        {
+            if (!await _countryRepository.CountriesExistAsync(countryId))
+            {
+                return NotFound();
+            }
+
+            var city = await _cityRepository.GetCityCountryAsync(countryId, cityId);
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            _cityRepository.DeleteCity(city);
+
+            if (!await _unitOfWork.SaveAsync())
+            {
+                throw new Exception($"Deleting city {cityId} for country {countryId} failed when saving.");
+            }
+
+            return NotFound();
         }
 
 
