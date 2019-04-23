@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreRateLimit;
 using AutoMapper;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -20,6 +22,8 @@ using MyRestfulAPI.Infrastucture.Data;
 using MyRestfulAPI.Infrastucture.Dto.City;
 using MyRestfulAPI.Infrastucture.Dto.Country;
 using MyRestfulAPI.Infrastucture.Repositories;
+using MyRestfulAPI.Infrastucture.Services;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace MyRestfulAPI.API
@@ -37,14 +41,13 @@ namespace MyRestfulAPI.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddTransient<IValidator<CountryAddDto>, CountryAddDtoValidator>();
-            services.AddTransient<IValidator<CityUpdateDto>, CityUpdateDtoValidator>();
 
-            
             services.AddMvc()
-                    .AddJsonOptions(options=> {
-                        //options.SerializerSettin 
+                    .AddJsonOptions(options =>
+                    {
+                        options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     })
+                    .AddFluentValidation()
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             // swagger ui
             // other configs;
@@ -58,10 +61,15 @@ namespace MyRestfulAPI.API
                 c.IncludeXmlComments(xmlPath);
             });
 
+            //services.AddPropertyMappings
+            services.AddTransient<ITypeHelperService, TypeHelperService>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper();
+
+            services.AddTransient<IValidator<CountryAddDto>, CountryAddDtoValidator>();
+            services.AddTransient<IValidator<CityUpdateDto>, CityUpdateDtoValidator>();
 
             services.AddDbContext<DbContext>(options =>
             {
@@ -70,8 +78,38 @@ namespace MyRestfulAPI.API
             });
 
             services.AddCors();
+            services.AddCors(options =>
+            {
 
+            });
 
+            services.Configure<MvcOptions>(options =>
+            {
+                //options.Filters.Add(new CorsAuthorzie)
+            });
+
+            services.AddMemoryCache();
+
+            services.Configure<IpRateLimitOptions>(options =>
+            {
+                options.GeneralRules = new List<RateLimitRule>()
+                {
+                    new RateLimitRule
+                    {
+                        Endpoint = "*",
+                        Limit = 10,
+                        Period ="5m"
+                    },
+                    new RateLimitRule
+                    {
+                        Endpoint = "*",
+                        Limit = 2,
+                        Period ="10s"
+                    }
+                };
+            });
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,7 +130,7 @@ namespace MyRestfulAPI.API
 
             app.UseSwaggerUI(c =>
             {
-                //c.RoutePrefix = "swagger/ui";
+                c.RoutePrefix = "swagger/ui";
                 c.SwaggerEndpoint("v1/swagger.json", "ChatBotApi");
             });
 

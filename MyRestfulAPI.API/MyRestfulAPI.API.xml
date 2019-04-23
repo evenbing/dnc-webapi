@@ -6,7 +6,7 @@
     <members>
         <member name="T:MyRestfulAPI.API.Controllers.CityController">
             <summary>
-            
+            city控制器
             </summary>
         </member>
         <member name="M:MyRestfulAPI.API.Controllers.CityController.#ctor(MyRestfulAPI.Core.Interfaces.IUnitOfWork,MyRestfulAPI.Core.Interfaces.ICountryRepository,MyRestfulAPI.Core.Interfaces.ICityRepository,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{MyRestfulAPI.API.Controllers.CityController})">
@@ -21,17 +21,74 @@
         </member>
         <member name="M:MyRestfulAPI.API.Controllers.CityController.GetCities(System.Int32)">
             <summary>
-            获取指定省份下面城市信息
+            获取指定国家下面城市信息
             </summary>
-            <param name="countryId">省份ID</param>
+            <param name="countryId">国家Id</param>
             <returns>城市信息</returns>
         </member>
         <member name="M:MyRestfulAPI.API.Controllers.CityController.GetCityForCountry(System.Int32,System.Int32)">
             <summary>
             获取城市信息
             </summary>
-            <param name="countryId"></param>
-            <param name="cityId"></param>
+            <param name="countryId">国家Id</param>
+            <param name="cityId">城市id</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.CityController.CreateCityForCountry(System.Int32,MyRestfulAPI.Infrastucture.Dto.City.CityDto)">
+            <summary>
+            创建城市
+            </summary>
+            <param name="countryId">国家Id</param>
+            <param name="city">城市信息</param>
+            <returns>状态码201</returns>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.CityController.DeleteCityForCountry(System.Int32,System.Int32)">
+            <summary>
+            删除指定id城市数据
+            </summary>
+            <param name="countryId">国家Id</param>
+            <param name="cityId">城市Id</param>
+            <returns>状态码204</returns>
+        </member>
+        <member name="T:MyRestfulAPI.API.Controllers.CountryController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.CountryController.GetCountries">
+            <summary>
+            获取省份数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.CountryController.GetCountry(System.Int32,System.String,System.Boolean)">
+            <summary>
+            获取指定ID的国家数据
+            </summary>
+            <param name="id">Id</param>
+            <param name="fields">请求的字段</param>
+            <param name="includeCities">获取下一级别的数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.CountryController.CreateCountry(MyRestfulAPI.Infrastucture.Dto.Country.CountryAddDto)">
+            <summary>
+            创建国家数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.CountryController.DeleteCountry(System.Int32)">
+            <summary>
+            删除国家数据
+            </summary>
+            <param name="id">id</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.CountryController.UpdateCountry(System.Int32,MyRestfulAPI.Infrastucture.Dto.Country.CountryUpdateDto)">
+            <summary>
+            更新国家数据
+            </summary>
+            <param name="id">id</param>
+            <param name="countryDto">dto</param>
             <returns></returns>
         </member>
         <member name="T:MyRestfulAPI.API.Controllers.ValuesController">
@@ -54,16 +111,16 @@
         </member>
         <member name="M:MyRestfulAPI.API.Controllers.ValuesController.Post(System.String)">
             <summary>
-            
+            测试post
             </summary>
             <param name="value"></param>
         </member>
         <member name="M:MyRestfulAPI.API.Controllers.ValuesController.Put(System.Int32,System.String)">
             <summary>
-            
+             测试put
             </summary>
-            <param name="id"></param>
-            <param name="value"></param>
+            <param name="id">指定ID</param>
+            <param name="value">值</param>
         </member>
         <member name="M:MyRestfulAPI.API.Controllers.ValuesController.Delete(System.Int32)">
             <summary>
