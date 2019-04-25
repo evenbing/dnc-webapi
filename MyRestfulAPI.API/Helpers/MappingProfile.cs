@@ -24,6 +24,9 @@ namespace MyRestfulAPI.API.Helpers
                      {
                          //Remove
 
+                         //add 
+
+                         //update
 
                      });
 

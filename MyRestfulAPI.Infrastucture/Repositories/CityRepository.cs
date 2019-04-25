@@ -12,9 +12,9 @@ namespace MyRestfulAPI.Infrastucture.Repositories
 {
     public class CityRepository : ICityRepository
     {
-        public readonly MyContext _myContext;
+        public readonly MyDbContext _myContext;
 
-        public CityRepository(MyContext myContext)
+        public CityRepository(MyDbContext myContext)
         {
             _myContext = myContext;
         }

@@ -1,42 +1,50 @@
-ï»¿using Microsoft.Extensions.Logging;
-using MyRestfulAPI.Core.DomainModels;
 using System;
-using System.Collections.Generic;
+using Xunit;
+using MyRestfulAPI.API.Controllers;
+using MyRestfulAPI.Infrastucture.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Text;
+using MyRestfulAPI.Core.DomainModels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Moq;
+using Microsoft.Extensions.Logging;
+using MyRestfulAPI.Core.Interfaces;
+using AutoMapper;
 
-namespace MyRestfulAPI.Infrastucture.Data.Seed
+namespace MyRestAPI.API.UnitTests
 {
-    public class MyContextSeed
+    public class APIControllerUnitTest
     {
-        public static async Task SeedAsync(MyDbContext myContext, LoggerFactory loggerFactory,
-            int retry = 0)
+
+        private MyDbContext GetMyDbContext()
         {
-            int retryForAvailability = retry;
-            try
+            var options = new DbContextOptionsBuilder<MyDbContext>()
+                              .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                              .Options;
+            var dbContext = new MyDbContext(options);
+
+            if (!dbContext.Countries.Any())
             {
-                if (!myContext.Countries.Any())
-                {
-                    myContext.Countries.AddRange(
-                          new List<Country>{
+                dbContext.Countries.AddRange(
+                      new List<Country>{
                             new Country{
                                 EnglishName = "China",
-                                ChineseName = "ä¸­åäººæ°‘å…±å’Œå›½",
-                                Abbreviation = "ä¸­å›½",
+                                ChineseName = "ÖĞ»ªÈËÃñ¹²ºÍ¹ú",
+                                Abbreviation = "ÖĞ¹ú",
                                 Cities = new List<City>
                                 {
-                                    new City{ Name = "åŒ—äº¬", Description = "é¦–éƒ½"},
-                                    new City{ Name = "ä¸Šæµ·", Description = "é­”éƒ½" },
-                                    new City{ Name = "æ·±åœ³" },
-                                    new City{ Name = "æ­å·" },
-                                    new City{ Name = "å¤©æ´¥" }
+                                    new City{ Name = "±±¾©", Description = "Ê×¶¼"},
+                                    new City{ Name = "ÉÏº£", Description = "Ä§¶¼" },
+                                    new City{ Name = "ÉîÛÚ" },
+                                    new City{ Name = "º¼Öİ" },
+                                    new City{ Name = "Ìì½ò" }
                                 }
                             },
                             new Country{
                                 EnglishName = "USA",
-                                ChineseName = "ç¾åˆ©åšåˆä¼—å›½",
-                                Abbreviation = "ç¾å›½",
+                                ChineseName = "ÃÀÀû¼áºÏÖÚ¹ú",
+                                Abbreviation = "ÃÀ¹ú",
                                 Cities = new List<City>
                                 {
                                     new City{ Name = "New York" },
@@ -48,8 +56,8 @@ namespace MyRestfulAPI.Infrastucture.Data.Seed
                             },
                             new Country{
                                 EnglishName = "Finland",
-                                ChineseName = "èŠ¬å…°",
-                                Abbreviation = "èŠ¬å…°",
+                                ChineseName = "·ÒÀ¼",
+                                Abbreviation = "·ÒÀ¼",
                                 Cities = new List<City>
                                 {
                                     new City{ Name = "Helsinki" },
@@ -59,8 +67,8 @@ namespace MyRestfulAPI.Infrastucture.Data.Seed
                             },
                             new Country{
                                 EnglishName = "UK",
-                                ChineseName = "å¤§ä¸åˆ—é¢ åŠåŒ—çˆ±å°”å…°è”åˆç‹å›½",
-                                Abbreviation = "è‹±å›½",
+                                ChineseName = "´ó²»ÁĞµß¼°±±°®¶ûÀ¼ÁªºÏÍõ¹ú",
+                                Abbreviation = "Ó¢¹ú",
                                 Cities = new List<City>
                                 {
                                     new City{ Name = "London" },
@@ -72,8 +80,8 @@ namespace MyRestfulAPI.Infrastucture.Data.Seed
                             },
                             new Country{
                                 EnglishName = "Denmark",
-                                ChineseName = "ä¸¹éº¦",
-                                Abbreviation = "ä¸¹éº¦",
+                                ChineseName = "µ¤Âó",
+                                Abbreviation = "µ¤Âó",
                                 Cities = new List<City>
                                 {
                                     new City{ Name = "Copenhagen " }
@@ -81,8 +89,8 @@ namespace MyRestfulAPI.Infrastucture.Data.Seed
                             },
                             new Country{
                                 EnglishName = "Norway",
-                                ChineseName = "æŒªå¨",
-                                Abbreviation = "æŒªå¨",
+                                ChineseName = "Å²Íş",
+                                Abbreviation = "Å²Íş",
                                 Cities = new List<City>
                                 {
                                     new City{ Name = "Oslo" }
@@ -90,8 +98,8 @@ namespace MyRestfulAPI.Infrastucture.Data.Seed
                             },
                             new Country{
                                 EnglishName = "Sweden",
-                                ChineseName = "ç‘å…¸",
-                                Abbreviation = "ç‘å…¸",
+                                ChineseName = "Èğµä",
+                                Abbreviation = "Èğµä",
                                 Cities = new List<City>
                                 {
                                     new City{ Name = "Stockholm" }
@@ -99,8 +107,8 @@ namespace MyRestfulAPI.Infrastucture.Data.Seed
                             },
                             new Country{
                                 EnglishName = "Germany",
-                                ChineseName = "å¾·æ„å¿—è”é‚¦å…±å’Œå›½",
-                                Abbreviation = "å¾·å›½",
+                                ChineseName = "µÂÒâÖ¾Áª°î¹²ºÍ¹ú",
+                                Abbreviation = "µÂ¹ú",
                                 Cities = new List<City>
                                 {
                                     new City{ Name = "Berlin" }
@@ -108,8 +116,8 @@ namespace MyRestfulAPI.Infrastucture.Data.Seed
                             },
                             new Country{
                                 EnglishName = "Poland",
-                                ChineseName = "æ³¢å…°",
-                                Abbreviation = "æ³¢å…°",
+                                ChineseName = "²¨À¼",
+                                Abbreviation = "²¨À¼",
                                 Cities = new List<City>
                                 {
                                     new City{ Name = "Warsaw" }
@@ -117,8 +125,8 @@ namespace MyRestfulAPI.Infrastucture.Data.Seed
                             },
                             new Country{
                                 EnglishName = "Switzerland",
-                                ChineseName = "ç‘å£«",
-                                Abbreviation = "ç‘å£«",
+                                ChineseName = "ÈğÊ¿",
+                                Abbreviation = "ÈğÊ¿",
                                 Cities = new List<City>
                                 {
                                     new City{ Name = "Bern" }
@@ -126,25 +134,57 @@ namespace MyRestfulAPI.Infrastucture.Data.Seed
                             },
                             new Country{
                                 EnglishName = "Austria",
-                                ChineseName = "å¥¥åœ°åˆ©",
-                                Abbreviation = "å¥¥åœ°åˆ©",
+                                ChineseName = "°ÂµØÀû",
+                                Abbreviation = "°ÂµØÀû",
                                 Cities = new List<City>
                                 {
                                     new City{ Name = "Vienna" }
                                 }
                             }
-                         }
-                     );
-                    await myContext.SaveChangesAsync();
-                }
+                     }
+                 );
             }
-            catch (Exception ex) {
-                Console.WriteLine(ex);
-                if(retryForAvailability<10)
-                {
-                    await SeedAsync(myContext, loggerFactory, retryForAvailability);
-                }
-            }
+            dbContext.SaveChanges();
+
+            return dbContext;
+        }
+
+
+        [Fact]
+        public void Get_ReturnCountry_WithNotParamter()
+        {
+            
+        }
+
+        [Fact]
+        public async Task Get_Cities__WithParamter()
+        {
+            var dbContext = GetMyDbContext();
+            var countrryId = dbContext.Countries.SingleOrDefault(x => x.Abbreviation == "ÖĞ¹ú").Id;
+            var countryRepository = new Mock<ICountryRepository>().Object;
+            var cityRepository = new Mock<ICityRepository>().Object;
+            var mapper = new Mock<IMapper>().Object;
+            var unitWork = new Mock<IUnitOfWork>().Object;
+            var flag = await countryRepository.CountriesExistAsync(countrryId);
+            var controller = new CityController(unitWork, countryRepository, cityRepository, mapper);
+
+            var response = await controller.GetCities(countrryId);
+             
+            
+        }
+
+        public async Task Get_City_WithParamter()
+        {
+
+            var dbContext = GetMyDbContext();
+            var countryRepository = new Mock<ICountryRepository>().Object;
+            var cityRepository = new Mock<ICityRepository>().Object;
+            var mapper = new Mock<IMapper>().Object;
+            var unitWork = new Mock<IUnitOfWork>().Object;
+            var controller = new CityController(unitWork, countryRepository, cityRepository, mapper);
+
+            var response = await controller.GetCityForCountry(1,1);
+           
         }
     }
 }

@@ -24,7 +24,7 @@ namespace MyRestfulAPI.API.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
-        private readonly ILogger<CityController> _logger;
+       // private readonly ILogger<CityController> _logger;
         private readonly ICountryRepository _countryRepository;
 
         /// <summary>
@@ -37,14 +37,14 @@ namespace MyRestfulAPI.API.Controllers
         /// <param name="logger"></param>
         public CityController(IUnitOfWork unitOfWork,
             ICountryRepository countryRepository,
-            ICityRepository cityRepository,IMapper mapper,
-            ILogger<CityController> logger)
+            ICityRepository cityRepository,IMapper mapper
+            )
         {
             _unitOfWork = unitOfWork;
             _cityRepository = cityRepository;
             _countryRepository = countryRepository;
             _mapper = mapper;
-            _logger = logger;
+            //_logger = logger;
         }
 
         #region private methods
@@ -77,7 +77,8 @@ namespace MyRestfulAPI.API.Controllers
             }
             var citiesDto = _mapper.Map<IEnumerable<CityAddDto>>(cities);
             //var wrapper = new LinkCollectionResourceWrapper<CityDto>(citiesDto);
-            return Ok();
+            //return Ok();
+            return Ok(citiesDto);
         }
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace MyRestfulAPI.API.Controllers
         {
             if (!await _countryRepository.CountriesExistAsync(countryId))
             {
-                _logger.LogInformation("NotFound");
+                //_logger.LogInformation("NotFound");
                 return NotFound();
             }
 

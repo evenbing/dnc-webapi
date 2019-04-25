@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace MyRestfulAPI.API.Controllers
 {
     /// <summary>
-    /// 
+    /// 国家控制器
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
@@ -25,6 +25,15 @@ namespace MyRestfulAPI.API.Controllers
         private readonly IPropertyMappingContainer _propertyMappingContainer;
         private readonly ITypeHelperService _typeHelperService;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        /// <param name="countryRepository"></param>
+        /// <param name="mapper"></param>
+        /// <param name="urlHelper"></param>
+        /// <param name="propertyMappingContainer"></param>
+        /// <param name="typeHelperService"></param>
         public CountryController(IUnitOfWork unitOfWork,
             ICountryRepository countryRepository,
             IMapper mapper,

@@ -9,7 +9,7 @@
             city控制器
             </summary>
         </member>
-        <member name="M:MyRestfulAPI.API.Controllers.CityController.#ctor(MyRestfulAPI.Core.Interfaces.IUnitOfWork,MyRestfulAPI.Core.Interfaces.ICountryRepository,MyRestfulAPI.Core.Interfaces.ICityRepository,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{MyRestfulAPI.API.Controllers.CityController})">
+        <member name="M:MyRestfulAPI.API.Controllers.CityController.#ctor(MyRestfulAPI.Core.Interfaces.IUnitOfWork,MyRestfulAPI.Core.Interfaces.ICountryRepository,MyRestfulAPI.Core.Interfaces.ICityRepository,AutoMapper.IMapper)">
             <summary>
             
             </summary>
@@ -52,8 +52,19 @@
         </member>
         <member name="T:MyRestfulAPI.API.Controllers.CountryController">
             <summary>
+            国家控制器
+            </summary>
+        </member>
+        <member name="M:MyRestfulAPI.API.Controllers.CountryController.#ctor(MyRestfulAPI.Core.Interfaces.IUnitOfWork,MyRestfulAPI.Core.Interfaces.ICountryRepository,AutoMapper.IMapper,Microsoft.AspNetCore.Mvc.IUrlHelper,MyRestfulAPI.Infrastucture.Services.IPropertyMappingContainer,MyRestfulAPI.Infrastucture.Services.ITypeHelperService)">
+            <summary>
             
             </summary>
+            <param name="unitOfWork"></param>
+            <param name="countryRepository"></param>
+            <param name="mapper"></param>
+            <param name="urlHelper"></param>
+            <param name="propertyMappingContainer"></param>
+            <param name="typeHelperService"></param>
         </member>
         <member name="M:MyRestfulAPI.API.Controllers.CountryController.GetCountries">
             <summary>

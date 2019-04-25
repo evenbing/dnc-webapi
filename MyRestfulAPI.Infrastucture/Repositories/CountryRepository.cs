@@ -13,10 +13,10 @@ namespace MyRestfulAPI.Infrastucture.Repositories
 {
     public class CountryRepository : ICountryRepository
     {
-        private readonly MyContext _myContext;
+        private readonly MyDbContext _myContext;
         private readonly IPropertyMappingContainer _propertyMappingContainer;
 
-        public CountryRepository(MyContext myContext,IPropertyMappingContainer propertyMappingContainer)
+        public CountryRepository(MyDbContext myContext,IPropertyMappingContainer propertyMappingContainer)
         {
             _myContext = myContext;
             _propertyMappingContainer = propertyMappingContainer;

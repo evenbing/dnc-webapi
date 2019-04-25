@@ -71,9 +71,10 @@ namespace MyRestfulAPI.API
             services.AddTransient<IValidator<CountryAddDto>, CountryAddDtoValidator>();
             services.AddTransient<IValidator<CityUpdateDto>, CityUpdateDtoValidator>();
 
-            services.AddDbContext<DbContext>(options =>
+            services.AddDbContext<MyDbContext>(options =>
             {
-                options.UseInMemoryDatabase("MyDb");
+                //内存数据库
+                options.UseInMemoryDatabase(Guid.NewGuid().ToString());
                 //options.UseLoggerFactory();
             });
 
@@ -130,8 +131,8 @@ namespace MyRestfulAPI.API
 
             app.UseSwaggerUI(c =>
             {
-                c.RoutePrefix = "swagger/ui";
-                c.SwaggerEndpoint("v1/swagger.json", "ChatBotApi");
+                //c.RoutePrefix = "swagger/ui";
+                c.SwaggerEndpoint("v1/swagger.json", "MyRestAPI");
             });
 
             //app.UseCors(builder => builder.WithOrigins(""));

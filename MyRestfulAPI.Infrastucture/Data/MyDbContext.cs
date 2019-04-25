@@ -8,9 +8,9 @@ using System.Text;
 
 namespace MyRestfulAPI.Infrastucture.Data
 {
-    public class MyContext : DbContext
+    public class MyDbContext : DbContext
     {
-        public MyContext(DbContextOptions<MyContext> options) : base(options)
+        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
 
         }
@@ -22,6 +22,11 @@ namespace MyRestfulAPI.Infrastucture.Data
             modelBuilder.ApplyConfiguration(new CountryConfiguration());
             modelBuilder.ApplyConfiguration(new CityConfiguration());
 
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
         }
 
         public DbSet<Country> Countries { get; set; }

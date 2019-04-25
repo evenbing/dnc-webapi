@@ -8,9 +8,9 @@ namespace MyRestfulAPI.Infrastucture.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly MyContext _myContext;
+        private readonly MyDbContext _myContext;
 
-        public UnitOfWork(MyContext myContext)
+        public UnitOfWork(MyDbContext myContext)
         {
             _myContext = myContext;
         }
