@@ -75,7 +75,7 @@ namespace MyRestfulAPI.API.Controllers
             {
                 return NotFound();
             }
-            var citiesDto = _mapper.Map<IEnumerable<CityAddDto>>(cities);
+            var citiesDto = _mapper.Map<IEnumerable<CityDto>>(cities);
             //var wrapper = new LinkCollectionResourceWrapper<CityDto>(citiesDto);
             //return Ok();
             return Ok(citiesDto);

@@ -11,6 +11,9 @@ using Moq;
 using Microsoft.Extensions.Logging;
 using MyRestfulAPI.Core.Interfaces;
 using AutoMapper;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
+using MyRestfulAPI.Infrastucture.Dto.City;
 
 namespace MyRestAPI.API.UnitTests
 {
@@ -168,8 +171,11 @@ namespace MyRestAPI.API.UnitTests
             var flag = await countryRepository.CountriesExistAsync(countrryId);
             var controller = new CityController(unitWork, countryRepository, cityRepository, mapper);
 
-            var response = await controller.GetCities(countrryId);
-             
+            ActionResult<OkObjectResult>  response = await controller.GetCities(countrryId);
+
+            //assert
+            response.Result.Should().NotBeNull();
+            response.Value.Should().BeOfType<IEnumerable<CityDto>>().Should().NotBeNull();
             
         }
 
@@ -183,8 +189,8 @@ namespace MyRestAPI.API.UnitTests
             var unitWork = new Mock<IUnitOfWork>().Object;
             var controller = new CityController(unitWork, countryRepository, cityRepository, mapper);
 
-            var response = await controller.GetCityForCountry(1,1);
-           
+            ActionResult<OkObjectResult> response = await controller.GetCityForCountry(1,1);
+            
         }
     }
 }
