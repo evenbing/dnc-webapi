@@ -32,6 +32,7 @@ namespace MyRestfulAPI.Infrastucture.Repositories
 
         public async Task<List<City>> GetCitiesForCountryAsync(int countryId)
         {
+            var cityes = _myContext.Countries.ToList();
             return await _myContext.Cities.Where(x => x.CountryId == countryId).ToListAsync();
         }
 

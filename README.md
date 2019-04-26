@@ -4,13 +4,17 @@
 1. fuentValidator 第三方入参检查
 2. identityServer4 oidc 认证中心
 3. ef core orm 框架
-4. 仓储模式
+4. 仓储模式,dto,unitwork
 5. serlog 
-6. automapper 实体
-7. sw ui
-8. 
+6. automapper 实体映射
+7. api 文档 swagger
+8. restfulapi
+9. xunit 单元测试
+10. docker 容器
+11. gitlab cli 持续集成
 ### 截图
 ### 后期打算
 不当个小demo玩玩,后面可以会集成更多有意思的东西,目前想法:
 1. ELK/EFK
 2. es
+3. k8s

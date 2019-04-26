@@ -55,9 +55,9 @@ namespace MyRestfulAPI.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetCountries()
+        public async Task GetCountries()
         {
-            return null;
+            
         }
 
         /// <summary>

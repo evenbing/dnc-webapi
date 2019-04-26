@@ -3,14 +3,13 @@ using MyRestfulAPI.Core.DomainModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MyRestfulAPI.Infrastucture.Data.Seed
 {
     public class MyContextSeed
     {
-        public static async Task SeedAsync(MyDbContext myContext, LoggerFactory loggerFactory,
+        public static async Task SeedAsync(MyDbContext myContext, ILoggerFactory loggerFactory,
             int retry = 0)
         {
             int retryForAvailability = retry;
@@ -136,6 +135,7 @@ namespace MyRestfulAPI.Infrastucture.Data.Seed
                          }
                      );
                     await myContext.SaveChangesAsync();
+                    var text = myContext.Countries.ToList();
                 }
             }
             catch (Exception ex) {

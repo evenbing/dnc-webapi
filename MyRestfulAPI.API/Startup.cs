@@ -21,6 +21,7 @@ using MyRestfulAPI.Core.Interfaces;
 using MyRestfulAPI.Infrastucture.Data;
 using MyRestfulAPI.Infrastucture.Dto.City;
 using MyRestfulAPI.Infrastucture.Dto.Country;
+using MyRestfulAPI.Infrastucture.Extensions;
 using MyRestfulAPI.Infrastucture.Repositories;
 using MyRestfulAPI.Infrastucture.Services;
 using Newtonsoft.Json.Serialization;
@@ -74,7 +75,8 @@ namespace MyRestfulAPI.API
             services.AddDbContext<MyDbContext>(options =>
             {
                 //内存数据库
-                options.UseInMemoryDatabase(Guid.NewGuid().ToString());
+                //options.UseSqlServer()
+                options.UseInMemoryDatabase("mydb");
                 //options.UseLoggerFactory();
             });
 
@@ -83,6 +85,8 @@ namespace MyRestfulAPI.API
             {
 
             });
+
+            services.AddPropertyMappings();
 
             services.Configure<MvcOptions>(options =>
             {

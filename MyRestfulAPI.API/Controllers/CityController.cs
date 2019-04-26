@@ -18,13 +18,12 @@ namespace MyRestfulAPI.API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class CityController: ControllerBase
+    public class CityController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
-       // private readonly ILogger<CityController> _logger;
+        // private readonly ILogger<CityController> _logger;
         private readonly ICountryRepository _countryRepository;
 
         /// <summary>
@@ -37,7 +36,7 @@ namespace MyRestfulAPI.API.Controllers
         /// <param name="logger"></param>
         public CityController(IUnitOfWork unitOfWork,
             ICountryRepository countryRepository,
-            ICityRepository cityRepository,IMapper mapper
+            ICityRepository cityRepository, IMapper mapper
             )
         {
             _unitOfWork = unitOfWork;
@@ -66,6 +65,7 @@ namespace MyRestfulAPI.API.Controllers
         [HttpGet]
         public async Task<ActionResult> GetCities(int countryId)
         {
+
             if (!await _countryRepository.CountriesExistAsync(countryId))
             {
                 return NotFound();
@@ -87,7 +87,7 @@ namespace MyRestfulAPI.API.Controllers
         /// <param name="countryId">国家Id</param>
         /// <param name="cityId">城市id</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("{countryId}")]
         public async Task<ActionResult> GetCityForCountry(int countryId, int cityId)
         {
             if (!await _countryRepository.CountriesExistAsync(countryId))
@@ -107,7 +107,7 @@ namespace MyRestfulAPI.API.Controllers
         /// <param name="countryId">国家Id</param>
         /// <param name="city">城市信息</param>
         /// <returns>状态码201</returns>
-        [HttpPost(Name = "createCityForCountry")]
+        [HttpPost]
         public async Task<IActionResult> CreateCityForCountry(int countryId, [FromBody] CityDto city)
         {
             if (city ==null)
@@ -164,7 +164,5 @@ namespace MyRestfulAPI.API.Controllers
 
             return NotFound();
         }
-
-
     }
 }
