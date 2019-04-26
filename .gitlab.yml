@@ -1,0 +1,18 @@
+stages:
+ - build
+ - test
+ - package
+ - deploy
+
+build:
+ stages: build
+ script:
+ - cd MyRestfulAPI.API
+ - dotnet build
+
+test:
+ stages: test
+ script:
+ - cd MyRestAPI.API.UnitTests
+ - dotnet build
+ - dotnet test

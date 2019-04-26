@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyRestfulAPI.Infrastucture"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyRestfulAPI.Authorize", "MyRestfulAPI.Authorize\MyRestfulAPI.Authorize.csproj", "{72D94FE4-7D74-46B4-87A1-7CE767D634FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRestAPI.API.UnitTests", "MyRestAPI.API.UnitTests\MyRestAPI.API.UnitTests.csproj", "{3C829C20-68DD-4FDA-92DF-D113EF664EF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyRestAPI.API.UnitTests", "MyRestAPI.API.UnitTests\MyRestAPI.API.UnitTests.csproj", "{3C829C20-68DD-4FDA-92DF-D113EF664EF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

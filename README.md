@@ -9,9 +9,9 @@
 6. automapper 实体映射
 7. api 文档 swagger
 8. restfulapi
-9. xunit 单元测试
+9. xunit 单元测试 和fulentAssertion
 10. docker 容器
-11. gitlab cli 持续集成
+11. gitlab ci 持续集成
 ### 截图
 ### 后期打算
 不当个小demo玩玩,后面可以会集成更多有意思的东西,目前想法:

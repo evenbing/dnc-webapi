@@ -179,6 +179,7 @@ namespace MyRestAPI.API.UnitTests
             
         }
 
+        [Fact]
         public async Task Get_City_WithParamter()
         {
 
@@ -190,7 +191,10 @@ namespace MyRestAPI.API.UnitTests
             var controller = new CityController(unitWork, countryRepository, cityRepository, mapper);
 
             ActionResult<OkObjectResult> response = await controller.GetCityForCountry(1,1);
-            
+
+            response.Result.Should().NotBeNull();
+            response.Value.Should().BeOfType<IEnumerable<CityDto>>().Should().NotBeNull();
+
         }
     }
 }
