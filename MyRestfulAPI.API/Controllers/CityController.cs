@@ -15,8 +15,8 @@ namespace MyRestfulAPI.API.Controllers
 {
     /// <summary>
     /// city控制器
-    /// </summary>
-    [Route("api/[controller]")]
+    /// </summarycities
+    [Route("api/countries/{countryId}/cities")]
     [ApiController]
     public class CityController : ControllerBase
     {
@@ -87,7 +87,7 @@ namespace MyRestfulAPI.API.Controllers
         /// <param name="countryId">国家Id</param>
         /// <param name="cityId">城市id</param>
         /// <returns></returns>
-        [HttpGet("{countryId}")]
+        [HttpGet("{cityId}")]
         public async Task<ActionResult> GetCityForCountry(int countryId, int cityId)
         {
             if (!await _countryRepository.CountriesExistAsync(countryId))

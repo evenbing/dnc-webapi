@@ -37,9 +37,24 @@ namespace MyRestfulAPI.Infrastucture.Repositories
             _myContext.Countries.Remove(country);
         }
 
-        public Task<PaginatedList<Country>> GetCountriesAsync(CountryDtoParamters paramters)
+        public  async Task<PaginatedList<Country>> GetCountriesAsync(CountryDtoParamters paramters)
         {
-            throw new NotImplementedException();
+            var query = _myContext.Countries.AsQueryable();
+            if (!string.IsNullOrEmpty(paramters.EnglishName))
+            {
+                var englishNameClause = paramters.EnglishName.Trim().ToLowerInvariant();
+                query = query.Where(x => x.EnglishName.ToLowerInvariant() == englishNameClause);
+            }
+
+            if(!string.IsNullOrEmpty(paramters.ChineseName))
+            {
+                var chineseNameClause = paramters.ChineseName.Trim().ToLowerInvariant();
+                query = query.Where(x => x.ChineseName.ToLowerInvariant() == chineseNameClause);
+            }
+
+            var count = await query.CountAsync();
+            var items = await query.Skip(paramters.PageSize * (paramters.PageIndex - 1)).Take(paramters.PageSize).ToListAsync();
+            return new PaginatedList<Country>(paramters.PageIndex, paramters.PageSize, count, items);
         }
 
         public async Task<IEnumerable<Country>> GetCountriesAsync(IEnumerable<int> ids)

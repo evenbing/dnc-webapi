@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MyRestfulAPI.Core.DomainModels
 {
-    public class CountryDtoParamters
+    public class CountryDtoParamters:PaginationBase
     {
        public string EnglishName { get; set; }
         public string ChineseName { get; set; }

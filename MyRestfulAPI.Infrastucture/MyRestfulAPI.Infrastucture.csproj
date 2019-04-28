@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MyRestfulAPI.Core\MyRestfulAPI.Core.csproj" />
   </ItemGroup>
 

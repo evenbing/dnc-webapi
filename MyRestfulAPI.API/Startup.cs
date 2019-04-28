@@ -21,6 +21,7 @@ using MyRestfulAPI.Core.Interfaces;
 using MyRestfulAPI.Infrastucture.Data;
 using MyRestfulAPI.Infrastucture.Dto.City;
 using MyRestfulAPI.Infrastucture.Dto.Country;
+using MyRestfulAPI.Infrastucture.elastcisearch;
 using MyRestfulAPI.Infrastucture.Extensions;
 using MyRestfulAPI.Infrastucture.Repositories;
 using MyRestfulAPI.Infrastucture.Services;
@@ -71,6 +72,7 @@ namespace MyRestfulAPI.API
 
             services.AddTransient<IValidator<CountryAddDto>, CountryAddDtoValidator>();
             services.AddTransient<IValidator<CityUpdateDto>, CityUpdateDtoValidator>();
+            services.AddSingleton<IEsClientProvider,EsClientProvider>();
 
             services.AddDbContext<MyDbContext>(options =>
             {

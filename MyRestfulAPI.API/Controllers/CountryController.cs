@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace MyRestfulAPI.API.Controllers
 {
     /// <summary>
@@ -55,9 +56,21 @@ namespace MyRestfulAPI.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task GetCountries()
+        public async Task<IActionResult> GetCountries(CountryDtoParamters countryDtoParamters,[FromHeader(Name ="Accept")] string mediaType)
         {
-            
+            if (!_propertyMappingContainer.ValidMappingExistsFor<CountryDto, Country>(countryDtoParamters.OrderBy))
+            {
+                return BadRequest("Can't find the fields for sorting");
+            }
+
+            if (!_typeHelperService.TypeHasProperties<CountryDto>(countryDtoParamters.Fields))
+            {
+                return BadRequest("Can't find the fields on Resource.");
+            }
+            var pagedList = await _countryRepository.GetCountriesAsync(countryDtoParamters);
+            var countryDto = _mapper.Map<List<CountryDto>>(pagedList);
+
+            return Ok();
         }
 
         /// <summary>
