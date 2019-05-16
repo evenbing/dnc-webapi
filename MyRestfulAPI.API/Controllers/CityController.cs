@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyRestfulAPI.Core.DomainModels;
@@ -15,7 +16,7 @@ namespace MyRestfulAPI.API.Controllers
 {
     /// <summary>
     /// city控制器
-    /// </summarycities
+    /// </summary>
     [Route("api/countries/{countryId}/cities")]
     [ApiController]
     public class CityController : ControllerBase
@@ -163,6 +164,44 @@ namespace MyRestfulAPI.API.Controllers
             }
 
             return NotFound();
+        }
+
+
+        /// <summary>
+        /// 局部更新city
+        /// </summary>
+        /// <param name="countryId"></param>
+        /// <param name="cityId"></param>
+        /// <param name="patchDocument"></param>
+        /// <returns></returns>
+        [HttpPatch]
+        public async Task<IActionResult> PatchCityForCountry(int countryId, int cityId,[FromBody]JsonPatchDocument<CityUpdateDto> patchDocument)
+        {
+            if (patchDocument==null)
+            {
+                return BadRequest();
+            }
+            if (!await _countryRepository.CountriesExistAsync(countryId))
+            {
+                return NotFound();
+            }
+
+            var city = await _cityRepository.GetCityCountryAsync(countryId,cityId);
+            if (city==null)
+            {
+                return NotFound();
+            }
+            var cityToPatch = _mapper.Map<CityUpdateDto>(city);
+            patchDocument.ApplyTo(cityToPatch);
+            if (!ModelState.IsValid)
+            {
+                return new UnprocessableEntityObjectResult(ModelState);
+            }
+
+            _mapper.Map(cityToPatch, city);
+
+
+            return NoContent();
         }
     }
 }

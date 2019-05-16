@@ -20,14 +20,29 @@ namespace MyRestfulAPI.API.Helpers
 
             CreateMap<CountryUpdateDto, Country>()
                      .ForMember(c => c.Cities, opt => opt.Ignore())
-                     .AfterMap((CountryUpdateDto,Country) =>
+                     .AfterMap((countryUpdateDto,country) =>
                      {
                          //Remove
-
+                         var countryUpdateCityIds = countryUpdateDto.Cities.Select(x => x.Id).ToList();
+                         var removeCities = country.Cities.Where(x => !countryUpdateCityIds.Contains(x.Id)).ToList();
+                         foreach (var city in removeCities)
+                         {
+                             country.Cities.Remove(city); 
+                         }
                          //add 
-
+                         var addedCitiesDto = countryUpdateDto.Cities.Where(x => x.Id == 0);
+                         var addedCities = Mapper.Map<IEnumerable<City>>(addedCitiesDto);
+                         foreach (var city in addedCities)
+                         {
+                             country.Cities.Add(city);
+                         }
                          //update
-
+                         var updateCities = country.Cities.Where(x => x.Id != 0).ToList();
+                         foreach (var city in updateCities)
+                         {
+                             var cityDto = countryUpdateDto.Cities.Single(x => x.Id == city.Id);
+                             Mapper.Map(cityDto,city);
+                         }
                      });
 
 

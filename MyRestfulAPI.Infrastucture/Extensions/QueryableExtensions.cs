@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Linq.Dynamic.Core;
 
 namespace MyRestfulAPI.Infrastucture.Extensions
 {
@@ -31,17 +32,41 @@ namespace MyRestfulAPI.Infrastucture.Extensions
             var orderByAfterSplit = orderBy.Split(',');
             foreach (var orderByClause in orderByAfterSplit.Reverse())
             {
+                var trimmedOrderByClause = orderByClause.Trim();
+                var orderDescending = trimmedOrderByClause.EndsWith(" desc");
+                var indexOffirstSpace = trimmedOrderByClause.IndexOf(" ", StringComparison.Ordinal);
+                var propertyName = indexOffirstSpace == -1 ? trimmedOrderByClause : trimmedOrderByClause.Remove(indexOffirstSpace);
+                if (!mappingDictionary.ContainsKey(propertyName))
+                {
+                    throw new ArgumentException();
+                }
+
+                var mappedProperties = mappingDictionary[propertyName];
+                if (mappedProperties==null)
+                {
+                    throw new ArgumentException();
+                }
+                mappedProperties.Reverse();
+                foreach (var destinationProperty in mappedProperties)
+                {
+                    if (destinationProperty.Revert)
+                    {
+                        orderDescending = !orderDescending;
+                    }
+                    source = source.OrderBy(destinationProperty.Name + (orderDescending ? "descending" : "ascending")); 
+                }
 
             }
+            return source;
         }
 
-        public static IQueryable<object> ToDynamicQueryable<TSource>(
-            this IQueryable<TSource> source,string fields,Dictionary<string,List<MappedProperty>> mappingDictionary)
-        {
-            if (source == null)
-            {
+    //    public static IQueryable<object> ToDynamicQueryable<TSource>(
+    //        this IQueryable<TSource> source,string fields,Dictionary<string,List<MappedProperty>> mappingDictionary)
+    //    {
+    //        if (source == null)
+    //        {
 
-            }
-        }
-    }
+    //        }
+    //    }
+    //}
 }

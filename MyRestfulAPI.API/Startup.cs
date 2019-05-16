@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +27,7 @@ using MyRestfulAPI.Infrastucture.Extensions;
 using MyRestfulAPI.Infrastucture.Repositories;
 using MyRestfulAPI.Infrastucture.Services;
 using Newtonsoft.Json.Serialization;
+using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace MyRestfulAPI.API
@@ -42,15 +44,19 @@ namespace MyRestfulAPI.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
 
 
-            services.AddMvc()
-                    .AddJsonOptions(options =>
-                    {
-                        options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    })
-                    .AddFluentValidation()
-                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options=> {
+                options.ReturnHttpNotAcceptable = true;
+                options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+            }).AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                        
+            })
+            .AddFluentValidation()
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             // swagger ui
             // other configs;
             // c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
@@ -72,7 +78,7 @@ namespace MyRestfulAPI.API
 
             services.AddTransient<IValidator<CountryAddDto>, CountryAddDtoValidator>();
             services.AddTransient<IValidator<CityUpdateDto>, CityUpdateDtoValidator>();
-            services.AddSingleton<IEsClientProvider,EsClientProvider>();
+            //services.AddSingleton<IEsClientProvider,EsClientProvider>();
 
             services.AddDbContext<MyDbContext>(options =>
             {

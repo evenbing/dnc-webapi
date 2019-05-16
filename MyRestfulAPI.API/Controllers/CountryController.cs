@@ -80,7 +80,7 @@ namespace MyRestfulAPI.API.Controllers
         /// <param name="fields">请求的字段</param>
         /// <param name="includeCities">获取下一级别的数据</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetCountry(int id,string fields= null,bool includeCities =false)
         {
             if (!_typeHelperService.TypeHasProperties<CountryDto>(fields))
@@ -136,7 +136,7 @@ namespace MyRestfulAPI.API.Controllers
         /// </summary>
         /// <param name="id">id</param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCountry(int id)
         {
             var country = await _countryRepository.GetCountryByIdAsync(id);
@@ -159,7 +159,7 @@ namespace MyRestfulAPI.API.Controllers
         /// <param name="id">id</param>
         /// <param name="countryDto">dto</param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCountry(int id, [FromBody] CountryUpdateDto countryDto)
         {
             if (countryDto == null)
@@ -178,7 +178,6 @@ namespace MyRestfulAPI.API.Controllers
             }
 
             _mapper.Map(countryDto, country);
-            _countryRepository.UpdateCountry(country);
             if (!await _unitOfWork.SaveAsync())
             {
                 throw new Exception($"Updating country {id} failed when saving.");

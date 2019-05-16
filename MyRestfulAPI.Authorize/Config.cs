@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4;
 using IdentityServer4.Models;
+using IdentityServer4.Test;
 
 namespace MyRestfulAPI.Authorize
 {
@@ -27,6 +28,11 @@ namespace MyRestfulAPI.Authorize
                    ClientId = "MyRestAPI",
                 }
             };
+
+        }
+
+        public static IEnumerable<TestUser> GetTestUsers()
+        {
 
         }
     }

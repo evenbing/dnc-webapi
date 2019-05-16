@@ -12,13 +12,11 @@ namespace MyRestfulAPI.API.Controllers
     /// </summary>
     public class SearchController: ControllerBase
     {
-        private readonly ElasticClient _esClient;
+        //private readonly ElasticClient _esClient;
 
-        public SearchController(IEsClientProvider esClient)
-        {
-            _esClient = esClient.GetClient();
-        }
-
-
+        //public SearchController(IEsClientProvider esClient)
+        //{
+        //    _esClient = esClient.GetClient();
+        //}
     }
 }

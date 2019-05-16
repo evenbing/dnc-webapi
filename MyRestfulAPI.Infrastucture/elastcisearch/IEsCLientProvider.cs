@@ -1,12 +1,12 @@
-﻿using Nest;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using Nest;
+//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-namespace MyRestfulAPI.Infrastucture.elastcisearch
-{
-    public interface IEsClientProvider
-    {
-        ElasticClient GetClient();
-    }
-}
+//namespace MyRestfulAPI.Infrastucture.elastcisearch
+//{
+//    public interface IEsClientProvider
+//    {
+//        ElasticClient GetClient();
+//    }
+//}

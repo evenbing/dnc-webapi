@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\swagger\ui\" />
+    <Folder Include="logs\" />
   </ItemGroup>
 
   <ItemGroup>
