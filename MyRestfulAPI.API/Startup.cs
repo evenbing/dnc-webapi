@@ -88,10 +88,11 @@ namespace MyRestfulAPI.API
                 //options.UseLoggerFactory();
             });
 
-            services.AddCors();
-            services.AddCors(options =>
-            {
-
+            services.AddCors(options=> {
+                options.AddPolicy("AllowSpecificOrigin", build =>
+                {
+                    build.WithOrigins("http://0.0.0.0:3000", "http://0.0.0.0:3001").AllowAnyHeader();
+                });
             });
 
             services.AddPropertyMappings();
